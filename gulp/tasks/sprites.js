@@ -20,6 +20,10 @@ gulp.task('beginClean', function(){
   return del(['./app/temp/sprite', './app/assets/images/sprites']);
 });
 
+gulp.task('endClean', ['copySpriteGraphics', 'copySpriteCSS'], function(){
+  return del(['./app/temp/sprite']);
+});
+
 gulp.task('createSprite', ['beginClean'], function() {
   return gulp.src('./app/assets/images/icons/**/*.svg')
       .pipe(svgSprite(config))
@@ -39,4 +43,4 @@ gulp.task('copySpriteCSS', ['createSprite'], function() {
 
 
 // the tasks run simultaneously. Need to include dependency in copySpriteCSS to prevent it from running before createSprite is complete
-gulp.task('icons', ['beginClean', 'createSprite', 'copySpriteCSS', 'copySpriteGraphics']);
+gulp.task('icons', ['beginClean', 'createSprite', 'copySpriteCSS', 'copySpriteGraphics', 'endClean']);
