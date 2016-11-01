@@ -3,13 +3,20 @@
   z-index: 2;
   width: 100%;
   padding: 10px 0;
+  transition: background-color .3s ease-out;
+
+&--is-expanded {
+  background-color: rgba($mainBlue, .55);
+}
 
   @mixin atMedium {
     background-color: rgba($mainBlue, .3);
   }
 
   &__button-container {
-    float: right;
+    @mixin atMedium {
+      float: right;
+    }
   }
 
   &__logo {
@@ -32,20 +39,100 @@
   }
 
   &__menu-content {
-    display:none;
+    opacity:0;
+    transform: scale(1.2);
+    /* transition all properties, not just opacity */
+    transition: all .3s ease-out;
+    /* opacity 0 field is clickable. Use negative z-index to hide it under other fields.
+       z-index goes together with position: relative. Otherwise it will be ignored.
+    */
+    z-index: -10;
+    position: relative;
+    padding-top: 90px;
+    text-align: center;
 
     @mixin atMedium {
-      display:block;
+      opacity: 1;
+      z-index: 1;
+      padding-top: 0;
+      transform: scale(1);
     }
+
+    &--is-visible {
+      opacity:1;
+      z-index: 1;
+      transform: scale(1);
+    }
+  }
+
+  &__menu-icon--close-x {
+    &::before {
+      /* rotate top bar 45 degrees and extend 25% */
+      transform: rotate(45deg) scaleX(1.25);
+    }
+
+    .site-header__menu-icon__middle {
+      /* hide middle bar */
+      opacity: 0;
+      transform: scaleX(0);
+    }
+
+    &::after {
+      /* rotate top bar -45 degrees, extend 25% and move vertically 1px */
+      transform: rotate(-45deg) scaleX(1.25) translateY(1px);
+    }
+
   }
 
   &__menu-icon {
     width:20px;
-    height:20px;
-    background-color: #fff;
+    height:19px;
     position:absolute;
     top:10px;
     right:10px;
+    z-index: 10;
+
+    &::before {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height:3px;
+      background-color: #fff;
+      top:0;
+      left:0;
+      /* default is 50% 50%. We need to change the pivot point to be the top left corner. Set to 0 0*/
+      transform-origin: 0 0;
+      /* animate transform property*/
+      transition: transform .3s ease-out;
+    }
+
+    &__middle {
+      position: absolute;
+      width: 20px;
+      height:3px;
+      background-color: #fff;
+      top:8px;
+      left:0;
+      /* animate opacity property. One way of doing it
+      transition: opacity .3s ease-out;
+      */
+
+      transition:all .3s ease-out;
+      /* will be shrinking from right to left */
+      transform-origin: 0 50%;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height:3px;
+      background-color: #fff;
+      bottom:0;
+      left:0;
+      transform-origin: 0 100%;
+      transition: transform .3s ease-out;
+    }
 
     @mixin atMedium {
       display:none;
