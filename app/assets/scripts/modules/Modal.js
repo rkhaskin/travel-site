@@ -29,6 +29,7 @@ class Modal {
   }
 
   openModal() {
+    console.log("aaa");
     this.modal.addClass("modal--is-visible");
 
     // prevent scrolling to top, as it is a link with href=#.
