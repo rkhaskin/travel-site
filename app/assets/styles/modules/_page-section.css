@@ -17,7 +17,7 @@
 
       /* lazyloaded is the class handled by lazysizes javascript*/
       &.lazyloaded {
-        background: url('/assets/images/testimonials-bg.jpg') top center no-repeat;
+        background: url('../../assets/images/testimonials-bg.jpg') top center no-repeat;
         background-size: cover;
       }
     }
